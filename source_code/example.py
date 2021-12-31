@@ -71,12 +71,15 @@ g = gen(X_train, y_train)
 m = create_model()
 m.fit_generator(
     g,
-    epochs = 5
+    epochs = 100
 )
-p = m.predict_proba(X_test)
+# p = m.predict_proba(X_test)
+predict_prob = m.predict(X_test)
+p = np.argmax(predict_prob,axis=1)
+
 score = roc_auc_score(
-    y_test[:, 1],
-    p[:, 1],
+    y_test[:,1],
+    p,
 )
 print(score)
 ## end fit
